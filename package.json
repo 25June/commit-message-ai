@@ -1,0 +1,16 @@
+{
+  "name": "cli-commit-message",
+  "version": "1.0.0",
+  "description": "A simple CLI tool example by OpenAI",
+  "main": "index.js",
+  "bin": {
+    "commit-message": "index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^1.17.0",
+    "dotenv": "^17.2.2",
+    "inquirer": "^12.9.4",
+    "openai": "^5.19.1"
+  }
+}
