@@ -12,3 +12,15 @@ export async function chooseProvider() {
 
   return answers.provider;
 }
+
+export async function chooseContentOption() {
+  const answers = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'contentOption',
+      message: 'Which content option do you want to generate?',
+      choices: ['One simple sentence', 'Detail'],
+    },
+  ]);
+  return answers.contentOption;
+}

@@ -9,21 +9,21 @@ import {
   DefaultCommitService,
 } from './commit-message.js';
 import { getChangedFiles, readFiles } from './get-files.js';
-import { chooseProvider } from './choose-provider.js';
+import { chooseProvider, chooseContentOption } from './steps.js';
 
 dotenv.config({ path: path.join(process.cwd(), '.env') });
 
-async function startProcess(aiClient) {
+async function startProcess(aiClient, contentOption) {
+  console.log('📂 Getting differences content...');
   const files = getChangedFiles();
   if (files.length === 0) {
     console.log('No staged files found.');
     process.exit(1);
   }
-  console.log('📂 Gathering staged files...');
-  const fileContents = readFiles(files);
 
+  const fileContents = readFiles(files);
   console.log('🤖 Asking OpenAI for commit message...');
-  const commitMessage = await aiClient.getMessage(fileContents);
+  const commitMessage = await aiClient.getMessage(fileContents, contentOption);
 
   console.log('📝 Suggested Commit Message:\n');
   console.log(commitMessage);
@@ -31,23 +31,24 @@ async function startProcess(aiClient) {
 
 (async () => {
   const provider = await chooseProvider();
+  const contentOption = await chooseContentOption();
   if (provider === 'OpenAI') {
     console.log('✅ You chose OpenAI, initializing OpenAI client...');
     const openAI = new OpenAICommitService(
       process.env.OPEN_AI_API_KEY,
       process.env.OPEN_AI_DOMAIN || ''
     );
-    await startProcess(openAI);
+    await startProcess(openAI, contentOption);
   } else if (provider === 'Gemini') {
     console.log('✅ You chose Gemini, initializing Gemini client...');
     const gemini = new GeminiCommitService(
       process.env.GEMINI_AI_API_KEY,
       'https://api.gemini.com/v1'
     );
-    await startProcess(gemini);
+    await startProcess(gemini, contentOption);
   } else {
     console.log('✅ You chose Default, initializing Default client...');
     const service = new DefaultCommitService();
-    await startProcess(service);
+    await startProcess(service, contentOption);
   }
 })();
