@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
 import {
@@ -11,7 +12,8 @@ import {
 import { getChangedFiles, readFiles } from './get-files.js';
 import { chooseProvider, chooseContentOption } from './steps.js';
 
-dotenv.config({ path: path.join(process.cwd(), '.env') });
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 async function startProcess(aiClient, contentOption) {
   console.log('📂 Getting differences content...');
