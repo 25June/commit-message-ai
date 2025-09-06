@@ -13,22 +13,26 @@ A smart CLI tool that generates meaningful commit messages by analyzing your sta
 ## Installation
 
 1. Clone this repository:
+
 ```bash
 git clone <your-repo-url>
 cd commit-message-ai
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up your environment variables by creating a `.env` file:
+
 ```bash
 cp .env.example .env
 ```
 
 4. Add your API keys to the `.env` file:
+
 ```env
 OPEN_AI_API_KEY=your_openai_api_key_here
 GEMINI_AI_API_KEY=your_gemini_api_key_here
@@ -36,6 +40,7 @@ OPEN_AI_DOMAIN=https://api.openai.com/v1  # Optional, defaults to OpenAI's API
 ```
 
 5. Make the tool globally available:
+
 ```bash
 npm link
 ```
@@ -43,11 +48,13 @@ npm link
 ## Usage
 
 1. Stage your changes in Git:
+
 ```bash
 git add .
 ```
 
 2. Run the commit message generator:
+
 ```bash
 commit-message
 ```
